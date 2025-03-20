@@ -27,7 +27,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"] {
+        input[type="email"], textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -57,32 +57,36 @@
     </style>
 </head>
 <body>
-    <form id="contactForm">
-        <h2>联系我们</h2>
-        <label for="name">姓名:</label>
-        <input type="text" id="name" name="name" placeholder="请输入您6的姓名" required>
+    <form id="emailForm">
+        <h2>发送邮件</h2>
+        <label for="to">收件人邮箱:</label>
+        <input type="email" id="to" name="to" placeholder="请输入收件人邮箱" required>
 
-        <label for="email">邮箱:</label>
-        <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+        <label for="subject">邮件主题:</label>
+        <input type="text" id="subject" name="subject" placeholder="请输入邮件主题" required>
 
-        <button type="submit">发1送</button>
+        <label for="text">邮件内容:</label>
+        <textarea id="text" name="text" rows="5" placeholder="请输入邮件内容" required></textarea>
+
+        <button type="submit">发送</button>
         <p class="message" id="message"></p>
     </form>
 
     <script>
-        const form = document.getElementById('contactForm');
+        const form = document.getElementById('emailForm');
         const message = document.getElementById('message');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault(); // 阻止表单默认提交行为
 
             const formData = {
-                name: form.name.value,
-                email: form.email.value
+                to: form.to.value,
+                subject: form.subject.value,
+                text: form.text.value
             };
 
             try {
-                const response = await fetch('http://0.0.0.0:3000/send-email', {
+                const response = await fetch('http://<你的公共IP>:3000/send-email', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
