@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0029)https://mingli6669.github.io/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>校友邦签到网页测试</title>
     <style>
@@ -50,9 +50,28 @@
         }
         .message {
             margin-top: 15px;
-            text-align: 300;
+            text-align: center;
             color: green;
-            font-weight: 3000px;
+            font-weight: bold;
+        }
+        .radio-group {
+            margin-bottom: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .radio-option input {
+            margin-right: 10px;
+        }
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .checkbox-option input {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -60,13 +79,30 @@
     <form id="dataForm">
         <h2>校友邦签到程序</h2>
         <label for="name">账号:</label>
-        <input type="text" id="name" name="name" placeholder="请输入您的校友邦账号" required>
+        <input type="text" id="name" name="name" placeholder="请输入您的校友邦账号" required="">
 
         <label for="message">密码:</label>
-        <textarea id="message" name="message" placeholder="请输入您的校友邦密码" required></textarea>
+        <textarea id="message" name="message" placeholder="请输入您的校友邦密码" required=""></textarea>
+
+        <div class="radio-group">
+            <label>操作类型:</label>
+            <div class="radio-option">
+                <input type="radio" id="signIn" name="operation" value="signIn" checked>
+                <label for="signIn">签到</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="signOut" name="operation" value="signOut">
+                <label for="signOut">签退</label>
+            </div>
+        </div>
+
+        <div class="checkbox-option">
+            <input type="checkbox" id="reSign" name="reSign">
+            <label for="reSign">重新签到</label>
+        </div>
 
         <button type="submit">提交</button>
-        <p class="message" id="responseMessage"></p>
+        <p class="message" id="responseMessage">后端返回：文件保存成功</p>
     </form>
 
     <script>
@@ -78,7 +114,9 @@
 
             const formData = {
                 name: form.name.value,
-                message: form.message.value
+                message: form.message.value,
+                operation: form.operation.value,
+                reSign: form.reSign.checked
             };
 
             try {
@@ -94,6 +132,8 @@
                 if (response.ok) {
                     responseMessage.textContent = `后端返回：${result.message}`;
                     form.reset(); // 清空表单
+                    // 重置单选按钮为默认值
+                    document.getElementById('signIn').checked = true;
                 } else {
                     responseMessage.textContent = `提交失败：${result.message}`;
                 }
@@ -102,5 +142,4 @@
             }
         });
     </script>
-</body>
-</html>
+</body></html>
